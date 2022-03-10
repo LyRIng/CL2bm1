@@ -13,7 +13,7 @@ Source code for programming examples is available in the **/examples** directory
 
 ### References
 
-[Ref1 - LyR AVR+Cypress](http://www.lyr-ing.com/Embedded/LyRAVR_CySp.htm)
+[Ref1 - LyR AVR+Cypress](https://www.lyr-ing.com/Embedded/LyRAVR_CyEn.htm)
 
 [ref-CVAVR,2022] HP InfoTech / Codevision AVR C Compiler http://www.hpinfotech.ro/cvavr-features.html
 
