@@ -1,0 +1,1 @@
+avrdude -C avrdude.conf -v -patmega1284p -carduino -PCOM4 -b115200 -D -Uflash:w:%1:i 

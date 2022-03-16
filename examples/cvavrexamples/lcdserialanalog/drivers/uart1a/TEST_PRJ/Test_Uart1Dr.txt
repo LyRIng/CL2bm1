@@ -1,0 +1,115 @@
+TEST_UART1DR.PRJ - only for autocompilation
+
+DE MAIN1284.C / COM1:
+
+// USART1 Receiver buffer
+// New Value 22.3.2012 - works at 38400baud
+// #define RX_BUFFER_SIZE1 8
+#define RX_BUFFER_SIZE1 96
+char rx_buffer1[RX_BUFFER_SIZE1];
+
+#if RX_BUFFER_SIZE1 <= 256
+unsigned char rx_wr_index1,rx_rd_index1,rx_counter1;
+#else
+unsigned int rx_wr_index1,rx_rd_index1,rx_counter1;
+#endif
+
+// This flag is set on USART1 Receiver buffer overflow
+bit rx_buffer_overflow1;
+
+/*****************************************************************************
+**
+** USART1 Receiver interrupt service routine
+**
+*****************************************************************************/
+//
+interrupt [USART1_RXC] void usart1_rx_isr(void)
+{
+char status,data;
+status=UCSR1A;
+data=UDR1;
+if ((status & (FRAMING_ERROR | PARITY_ERROR | DATA_OVERRUN))==0)
+   {
+   rx_buffer1[rx_wr_index1++]=data;
+#if RX_BUFFER_SIZE1 == 256
+   // special case for receiver buffer size=256
+   if (++rx_counter1 == 0)
+      {
+#else
+   if (rx_wr_index1 == RX_BUFFER_SIZE1) rx_wr_index1=0;
+   if (++rx_counter1 == RX_BUFFER_SIZE1)
+      {
+      rx_counter1=0;
+#endif
+      rx_buffer_overflow1=1;
+      }
+   }
+}
+
+// Get a character from the USART1 Receiver buffer
+#pragma used+
+char getchar1(void)
+{
+char data;
+while (rx_counter1==0);
+data=rx_buffer1[rx_rd_index1++];
+#if RX_BUFFER_SIZE1 != 256
+if (rx_rd_index1 == RX_BUFFER_SIZE1) rx_rd_index1=0;
+#endif
+#asm("cli")
+--rx_counter1;
+#asm("sei")
+return data;
+}
+#pragma used-
+
+// USART1 Transmitter buffer
+// 22.3.2012 New Value
+// #define TX_BUFFER_SIZE1 8
+#define TX_BUFFER_SIZE1 24
+
+char tx_buffer1[TX_BUFFER_SIZE1];
+
+#if TX_BUFFER_SIZE1 <= 256
+unsigned char tx_wr_index1,tx_rd_index1,tx_counter1;
+#else
+unsigned int tx_wr_index1,tx_rd_index1,tx_counter1;
+#endif
+
+/*****************************************************************************
+**
+** USART1 Transmitter interrupt service routine
+**
+*****************************************************************************/
+//
+interrupt [USART1_TXC] void usart1_tx_isr(void)
+{
+if (tx_counter1)
+   {
+   --tx_counter1;
+   UDR1=tx_buffer1[tx_rd_index1++];
+#if TX_BUFFER_SIZE1 != 256
+   if (tx_rd_index1 == TX_BUFFER_SIZE1) tx_rd_index1=0;
+#endif
+   }
+}
+
+// Write a character to the USART1 Transmitter buffer
+#pragma used+
+void putchar1(char c)
+{
+while (tx_counter1 == TX_BUFFER_SIZE1);
+#asm("cli")
+if (tx_counter1 || ((UCSR1A & DATA_REGISTER_EMPTY)==0))
+   {
+   tx_buffer1[tx_wr_index1++]=c;
+#if TX_BUFFER_SIZE1 != 256
+   if (tx_wr_index1 == TX_BUFFER_SIZE1) tx_wr_index1=0;
+#endif
+   ++tx_counter1;
+   }
+else
+   UDR1=c;
+#asm("sei")
+}
+#pragma used-

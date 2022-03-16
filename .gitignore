@@ -1,0 +1,60 @@
+# CodeVision AVR gitignore R.Oliva 11-03-2022
+# version 1.00
+# Prerequisites
+*.d
+
+# Object files
+*.o
+*.ko
+*.obj
+*.elf
+
+# Linker output
+*.ilk
+*.map
+*.exp
+*.asm
+*.lst
+
+# Precompiled Headers
+*.gch
+*.pch
+
+# Libraries
+*.lib
+*.a
+*.la
+*.lo
+
+# Executables
+*.exe
+!avrdude.exe
+!avrdude.conf
+*.out
+*.app
+*.hex
+!*.blinkled1.hex
+!*.serialanalog1.hex
+*.rom
+
+# Debug files
+*.dSYM/
+*.su
+*.idb
+*.pdb
+
+# CVAVR specifics
+*.prj~
+*.h~
+*.c~
+*.hci
+*.cci
+*.cbi
+*.cof
+*.fct
+*.ol
+*.al
+*.str1
+*.sym1
+*.sym2
+*.sym3

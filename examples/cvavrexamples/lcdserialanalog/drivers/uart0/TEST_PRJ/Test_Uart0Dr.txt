@@ -1,0 +1,12 @@
+uart0_Driver 1 - Tested for Kieras --OK
+Self Compilation test in \TEST_PRJ\Test_Uart0Dr.prj --OK
+Test operation in C:\cvavr328\Work3\CL2\CL2_Drivers\UART0\TST_FUNC_PRJ\Test_Func_Uart0Dr.prj
+
+Version for PWRC2-v10a Added Wrapper function and stdint.h 13.12.21
+Version 1.2A 26.1.22 corrected definitions to .c and static local variables and definitions, global functions
+(except putchar, getchar) added USART0_ naming prefix
+
+v30-01-22 changed name to uart0dr1.c / .h for 8.3 format of files..
+in .c change internal reference to uart0dr1.h 
+
+Version for examples / check for IHCR self compilation 03-22 ok

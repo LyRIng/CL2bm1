@@ -1,0 +1,2 @@
+Just to test self-compilation of bsp_cl2.c 
+-- problems when stdint.h was not included explicitly-- 31.1.2022
