@@ -45,6 +45,7 @@
 
 # CVAVR specifics
 *.prj~
+*.cprj
 *.h~
 *.c~
 *.hci
@@ -58,3 +59,6 @@
 *.sym1
 *.sym2
 *.sym3
+
+#Other
+*.docx
