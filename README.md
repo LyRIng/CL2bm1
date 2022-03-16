@@ -6,10 +6,11 @@ This board contains an ATMega1284P controller, and has been active and in use si
 In directory **/schem** the complete schematic of the board is available.  
 
 
-In the **/features** directory a description PDF of the board is available.  
+In the **/features** directory a description PDF of the board is available, and the latest datasheet of AVR/Microchip ATMega1284P controller.  
 
 ### Programming Examples
-Source code for programming examples is available in the **/examples** directory. 
+Source code for programming examples is available in the **/examples** directory. This update contains
+examples for CodevisionAVR C Compiler (Examples1-3), see full documentation in **/examples-doc**
 
 ### References
 
